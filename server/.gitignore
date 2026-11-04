@@ -1,0 +1,15 @@
+# 1. Dependencies 
+node_modules/
+
+# 2. Environment Variables 
+.env
+config.env
+
+# 3. Local Data 
+dev-data/
+*.sqlite
+*.db
+
+# 4. Logs & System files
+*.log
+.DS_Store

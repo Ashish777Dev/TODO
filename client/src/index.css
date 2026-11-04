@@ -1,0 +1,274 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Righteous&display=swap");
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+:root {
+  --background-img: url("./assets/images/bg-mobile-light.jpg");
+  --background-img-desktop: url("./assets/images/bg-desktop-light.jpg");
+  --theme-icon-img: url("./assets/images/icon-moon.svg");
+  --component-bg: #ffffff;
+  --completed-task-color: hsl(233, 11%, 84%);
+  --active-task-color: hsl(235, 19%, 35%);
+  --placeholder-color: hsl(236, 9%, 61%);
+  --background-color: hsl(0, 0%, 98%);
+  --shadow-color: 0px 35px 50px -15px rgba(194, 195, 214, 0.5);
+  --max-width: 600px;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: "Josefin Sans";
+}
+button,
+input {
+  font-family: "Josefin Sans";
+}
+body {
+  background-color: var(--background-color);
+  transition: background-color 0.6s ease;
+}
+body.dark-mode {
+  --background-img: url("./assets/images/bg-mobile-dark.jpg");
+  --background-img-desktop: url("./assets/images/bg-desktop-dark.jpg");
+  --theme-icon-img: url("./assets/images/icon-sun.svg");
+  --component-bg: hsl(235, 24%, 19%);
+  --completed-task-color: hsl(235, 16%, 43%);
+  --active-task-color: hsl(234, 39%, 85%);
+  --placeholder-color: hsl(236, 9%, 61%);
+  --background-color: hsl(235, 21%, 11%);
+  --shadow-color: 0px 1px 10px -10px rgba(0, 0, 0, 0.5);
+}
+.App {
+  /* background-image: var(--background-img-desktop);
+  background-size: contain;
+  background-repeat: no-repeat; */
+  min-height: 100vh;
+  width: 100%;
+  font-size: 1.8rem;
+  position: relative;
+  background-repeat: no-repeat;
+}
+.App::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 300px; /* fixed header height from the design */
+  background-image: var(--background-img-desktop);
+  background-size: cover; /* fill the strip, crop the extra */
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1; /* stays behind your content */
+}
+.wrapper-1 {
+  width: min(540px, 100% - 48px);
+  position: relative;
+  top: 70px;
+  left: 50%;
+  max-width: var(--max-width);
+  transform: translateX(-50%);
+}
+.header {
+  width: 100%;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.header h1 {
+  display: inline-block;
+  font-weight: 700;
+  font-size: clamp(19px, 4vw, 25px);
+  color: #ffffffff;
+  letter-spacing: 5px;
+}
+
+.task-container {
+  position: relative;
+  top: 120px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  left: 50%;
+  width: min(540px, 100% - 48px);
+  height: 400px;
+  transform: translateX(-50%);
+}
+
+.input-field {
+  background-color: var(--component-bg);
+
+  gap: 10px;
+  border-radius: 0.8rem;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0 0.8rem;
+  align-items: center;
+}
+.border-circle {
+  display: block;
+  margin-bottom: 0.4rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid hsl(234, 39%, 85%);
+}
+
+.input-field input {
+  flex-grow: 1;
+  height: auto;
+  font-size: 1.6rem;
+  outline: none;
+  background-color: transparent;
+  border: none;
+  color: var(--active-task-color);
+}
+
+.input-field input::placeholder {
+  color: var(--placeholder-color);
+}
+
+.item {
+  background-color: var(--component-bg);
+  font-size: 1.3rem;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+
+  padding: 1.3rem 0.8rem;
+  gap: 10px;
+  align-items: center;
+  border-bottom: 1px solid hsl(237, 14%, 26%);
+  border-radius: 0.1rem;
+}
+.item:last-child {
+  border-bottom: none;
+}
+.task-txt {
+  height: 100%;
+  text-align: left;
+  word-break: break;
+  flex: 1;
+  padding: 0.5rem 0;
+  color: var(--active-task-color);
+}
+.task-txt.completed {
+  text-decoration: line-through;
+  color: var(--completed-task-color);
+  opacity: 0.9;
+}
+
+.delete-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  background-color: transparent;
+  border: none;
+  border: none;
+  width: 14px;
+  height: 14px;
+  background-image: url("./assets/images/icon-cross.svg");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 0 0.5rem;
+}
+.no-content {
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  width: 100%;
+  text-align: center;
+
+  padding: 40px 20px;
+  color: var(--active-task-color); /* Navy 850 or Purple 300 */
+}
+.task-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--component-bg);
+  margin-top: 1.4rem;
+  padding: 1.8rem 0.9rem;
+  font-size: 1.3rem;
+  margin: 0.1rem 0;
+}
+.task-status,
+.task-status button {
+  color: hsl(236, 9%, 61%);
+}
+
+.task-status button {
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+.theme-switch {
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  display: flex;
+  position: relative;
+  float: right;
+  top: 3px;
+}
+.theme-switch input[type="checkbox"] {
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  opacity: 0;
+}
+.theme-switch .icon {
+  display: block;
+  position: absolute;
+  background-image: var(
+    --theme-icon-img
+  ); /* This will use the Moon path from :root */
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+.theme-switch input[type="checkbox"]:checked ~ .icon {
+  background-image: var(--theme-icon-img);
+}
+.filter-tab {
+  width: min(540px, 100% - 48px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.filter-tab button {
+  padding: 0.5rem 1.2rem;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  color: var(--active-task-color);
+}
+.drag-item {
+  background-color: red;
+  width: 60%;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+@media screen and (max-width: 768px) {
+  .App::before {
+    background-image: var(--background-img);
+    height: 200px;
+  }
+  .task-container {
+    top: 80px;
+  }
+}

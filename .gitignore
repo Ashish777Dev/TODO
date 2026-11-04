@@ -1,0 +1,14 @@
+# 1. Ignore everything in the root by default
+/*
+
+!/client/
+!/server/
+
+# 3. Allow root-level git and readme files
+!/.gitignore
+!/README.md
+
+# 4. Global system/editor junk (just in case)
+.DS_Store
+.vscode/
+.idea/
