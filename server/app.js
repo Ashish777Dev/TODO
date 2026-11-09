@@ -7,6 +7,7 @@ dotenv.config({ path: "./config.env" });
 const app = express();
 const taskRouter = require("./routes/taskRoute.js");
 const userRouter = require("./routes/userRoute.js");
+const globalErrorMiddlware = require("./controllers/errorController.js");
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -22,13 +23,6 @@ app.use((req, res, next) => {
 });
 
 //Global Error MiddleWare
-app.use((err, req, res, next) => {
-  err.statusCode = err.statusCode || 500;
-  err.status = err.status || "error";
+app.use(globalErrorMiddlware);
 
-  res.status(err.statusCode).json({
-    message: err.message,
-    status: err.status,
-  });
-});
 module.exports = app;
