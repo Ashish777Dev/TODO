@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 const validator = require("validator");
+const AppError = require("../utils/AppError");
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -32,6 +34,16 @@ const userSchema = new mongoose.Schema({
       message: "Password are not the same",
     },
   },
+});
+
+// HASH password
+userSchema.pre("save", async function () {
+  if (!this.isModified("password")) return;
+
+  this.password = await bcrypt.hash(this.password, 12);
+
+  // delete passwordConfirm field so it don't save in database
+  this.passwordConfirm = undefined;
 });
 
 const User = mongoose.model("User", userSchema);
