@@ -1,9 +1,9 @@
 const express = require("express");
-const dotenv = require("dotenv");
+
 const AppError = require("./utils/AppError.js");
+const morgan = require("morgan");
 
 const cors = require("cors");
-dotenv.config({ path: "./config.env" });
 const app = express();
 const taskRouter = require("./routes/taskRoute.js");
 const userRouter = require("./routes/userRoute.js");
@@ -14,6 +14,11 @@ app.use(
   }),
 );
 app.use(express.json());
+
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
+
 app.use("/api/v1/tasks", taskRouter);
 app.use("/api/v1/users", userRouter);
 
