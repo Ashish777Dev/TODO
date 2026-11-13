@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const validator = require("validator");
 const AppError = require("../utils/AppError");
 
@@ -46,6 +46,14 @@ userSchema.pre("save", async function () {
   // delete passwordConfirm field so it don't save in database
   this.passwordConfirm = undefined;
 });
+
+// schema method
+userSchema.methods.correctPassword = async function (
+  candidatePassword,
+  userPassword,
+) {
+  return bcrypt.compare(candidatePassword, userPassword);
+};
 
 const User = mongoose.model("User", userSchema);
 

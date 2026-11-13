@@ -1,4 +1,5 @@
-const user = require("./../models/user");
+const AppError = require("../utils/AppError");
+const User = require("./../models/user");
 const jwt = require("jsonwebtoken");
 
 const signToken = (id) => {
@@ -9,9 +10,9 @@ const signToken = (id) => {
 
 // SIGNUP NEW USER
 
-exports.signup = async (req, res, next) => {
+exports.signup = async (req, res) => {
   // create a new User
-  const newUser = await user.create({
+  const newUser = await User.create({
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
@@ -26,6 +27,34 @@ exports.signup = async (req, res, next) => {
     token,
     data: {
       user: newUser,
+    },
+  });
+};
+
+// LOGIN USER
+exports.login = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  // check if email and password exists
+  if (!email || !password) {
+    return next(new AppError(`Invalid email id and password`, 400));
+  }
+
+  // check user exist and password is correct
+
+  const user = await User.findOne({ email }).select("+password");
+
+  if (!user || !(await user.correctPassword(password, user.password))) {
+    return next(new AppError(`Incorrect  email or password`, 401));
+  }
+
+  // if everything ok give token to user
+  const token = signToken(user._id);
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      token,
     },
   });
 };
